@@ -1,4 +1,9 @@
+# backend
 .vs/
 .vscode/
 bin/
 obj/
+
+# frontend
+node_modules/
+dist/
