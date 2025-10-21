@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: by-coders-challenge-db
+    environment:
+      POSTGRES_DB: bycoderschallenge
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: superadmin
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d bycoderschallenge"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  web-api:
+    build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
+    container_name: by-coders-challenge-api
+    ports:
+      - "5252:5252" # Map host port 5252 to container port 5252
+    volumes:
+      - ./ByCodersChallengeDotNet:/src # Mount the local app for development
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development # Example environment variable
+volumes:
+  db_data:
