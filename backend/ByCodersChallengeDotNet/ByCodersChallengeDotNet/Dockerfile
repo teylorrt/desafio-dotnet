@@ -12,7 +12,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ByCodersChallengeDotNet/ByCodersChallengeDotNet.csproj", "ByCodersChallengeDotNet/"]
+COPY ["ByCodersChallengeDotNet/ByCodersChallengeDotNet/ByCodersChallengeDotNet.csproj", "ByCodersChallengeDotNet/"]
 RUN dotnet restore "./ByCodersChallengeDotNet/ByCodersChallengeDotNet.csproj"
 COPY . .
 WORKDIR "/src/ByCodersChallengeDotNet"
