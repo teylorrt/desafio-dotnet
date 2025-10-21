@@ -13,6 +13,15 @@ namespace ByCodersChallenge.Application.Service
             _operationRepository = operationRepository;
         }
 
+        public bool ImportOperations(string text)
+        {
+            IEnumerable<Operation> operations = [];
+
+            var saved = _operationRepository.Save(operations);
+
+            return saved;
+        }
+
         public IEnumerable<Operation> ListOperations()
         {
             return _operationRepository.List();

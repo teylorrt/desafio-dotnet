@@ -9,5 +9,10 @@ namespace ByCodersChallenge.Infrastructure.Repository
         {
             return [];
         }
+
+        public bool Save(IEnumerable<Operation> operations)
+        {
+            return true;
+        }
     }
 }

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="ByCodersChallengeDotNet.Tests/ByCodersChallengeDotNet.Tests.csproj" Id="2ae2ae8b-b72e-454a-a4be-4a36687cd419" />
   <Project Path="ByCodersChallengeDotNet/ByCodersChallengeDotNet.csproj" />
 </Solution>
