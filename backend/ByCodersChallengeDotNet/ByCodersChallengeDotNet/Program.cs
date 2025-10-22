@@ -1,4 +1,9 @@
 
+using ByCodersChallengeDotNet.Application.Services;
+using ByCodersChallengeDotNet.Core.Repositories;
+using ByCodersChallengeDotNet.Core.Services;
+using ByCodersChallengeDotNet.Infrastructure.Repositories;
+
 namespace ByCodersChallengeDotNet
 {
     public class Program
@@ -8,6 +13,9 @@ namespace ByCodersChallengeDotNet
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services
+                .AddTransient<IOperationRepository, OperationRepository>()
+                .AddTransient<IOperationService, OperationService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

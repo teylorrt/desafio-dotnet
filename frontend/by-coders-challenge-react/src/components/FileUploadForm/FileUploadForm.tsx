@@ -25,7 +25,7 @@ const FileUploadForm: React.FC = () => {
 
     try {
       // Replace with your actual upload API endpoint
-      const response = await fetch('/api/upload', {
+      const response = await fetch('http://localhost:5252/api/operation/import', {
         method: 'POST',
         body: formData,
       });

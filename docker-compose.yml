@@ -19,7 +19,8 @@ services:
     build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
     container_name: by-coders-challenge-api
     ports:
-      - "5252:5252" # Map host port 5252 to container port 5252
+      - "5252:8080" # Map host port 5252 to container port 8080
+      - "7170:8081" # Map host port 7170 to container port 8081
     volumes:
       - ./ByCodersChallengeDotNet:/src # Mount the local app for development
     environment:
