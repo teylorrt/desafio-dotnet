@@ -1,6 +1,6 @@
-﻿using ByCodersChallenge.Core.Entity;
+﻿using ByCodersChallengeDotNet.Core.Entities;
 
-namespace ByCodersChallenge.Core.Service
+namespace ByCodersChallengeDotNet.Core.Services
 {
     public interface IOperationService
     {

@@ -1,6 +1,6 @@
-﻿using ByCodersChallenge.Core.Entity;
+﻿using ByCodersChallengeDotNet.Core.Entities;
 
-namespace ByCodersChallenge.Core.Repository
+namespace ByCodersChallengeDotNet.Core.Repositories
 {
     public interface IOperationRepository
     {

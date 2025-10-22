@@ -1,5 +1,5 @@
-﻿using ByCodersChallenge.Application.Service;
-using ByCodersChallenge.Infrastructure.Repository;
+﻿using ByCodersChallengeDotNet.Application.Services;
+using ByCodersChallengeDotNet.Infrastructure.Repositories;
 
 namespace ByCodersChallengeDotNet.Tests
 {
@@ -14,6 +14,10 @@ namespace ByCodersChallengeDotNet.Tests
             var imported = operationService.ImportOperations(input);
 
             Assert.True(imported);
+
+            var list = operationService.ListOperations();
+
+            Assert.Equal(21, list.Count());
         }
     }
 }

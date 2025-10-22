@@ -1,8 +1,8 @@
-﻿using ByCodersChallenge.Core.Entity;
-using ByCodersChallenge.Core.Service;
+﻿using ByCodersChallengeDotNet.Core.Entities;
+using ByCodersChallengeDotNet.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ByCodersChallenge.Presentation.Controller
+namespace ByCodersChallengeDotNet.Presentation.Controllers
 {
     public class OperationController : ControllerBase
     {
