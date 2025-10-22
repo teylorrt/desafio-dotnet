@@ -4,6 +4,8 @@ using ByCodersChallengeDotNet.Core.Enums;
 using ByCodersChallengeDotNet.Core.Exceptions;
 using ByCodersChallengeDotNet.Core.Repositories;
 using ByCodersChallengeDotNet.Core.Services;
+using System.Buffers;
+using System.Text;
 
 namespace ByCodersChallengeDotNet.Application.Services
 {
@@ -29,8 +31,12 @@ namespace ByCodersChallengeDotNet.Application.Services
             _operationRepository = operationRepository;
         }
 
-        public bool ImportOperations(string text)
+        public bool ImportOperations(Stream fileStream)
         {
+            var span = GetSpanChar(fileStream);
+
+            var text = span.ToString();
+
             if (string.IsNullOrEmpty(text))
             {
                 throw new NoDataException();
@@ -56,7 +62,7 @@ namespace ByCodersChallengeDotNet.Application.Services
                     }
 
                     var value = slice[field.Start.. (field.End+i)];
-                    operation.SetField(field.Type, value.ToString());
+                    operation.SetField(field.Type, value);
                 }
 
                 operations.Add(operation);
@@ -70,6 +76,30 @@ namespace ByCodersChallengeDotNet.Application.Services
         public IEnumerable<Operation> ListOperations()
         {
             return _operationRepository.List();
+        }
+
+        private static ReadOnlySpan<char> GetSpanChar(Stream fileStream)
+        {
+            byte[] buffer = ArrayPool<byte>.Shared.Rent((int)fileStream.Length);
+
+            int bytesRead = fileStream.Read(buffer, 0, (int)fileStream.Length);
+
+            ReadOnlySpan<byte> fileContent = new(buffer, 0, bytesRead);
+
+            // Choose the appropriate encoding (e.g., UTF8)
+            Encoding encoding = Encoding.UTF8;
+
+            // Determine the maximum number of characters that might be produced
+            int maxCharCount = encoding.GetMaxCharCount(fileContent.Length);
+
+            // Create a char array to store the decoded characters
+            char[] charBuffer = new char[maxCharCount];
+
+            // Decode the bytes into the char buffer
+            int charsWritten = encoding.GetChars(fileContent, charBuffer);
+
+            // Return a ReadOnlySpan<char> from the populated portion of the buffer
+            return new ReadOnlySpan<char>(charBuffer, 0, charsWritten);
         }
     }
 }

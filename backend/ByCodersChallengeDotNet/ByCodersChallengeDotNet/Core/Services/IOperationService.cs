@@ -4,7 +4,7 @@ namespace ByCodersChallengeDotNet.Core.Services
 {
     public interface IOperationService
     {
-        bool ImportOperations(string text);
+        bool ImportOperations(Stream fileStream);
         IEnumerable<Operation> ListOperations();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ByCodersChallengeDotNet.Application.Services;
+using ByCodersChallengeDotNet.Core.Services;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
 
 namespace ByCodersChallengeDotNet.Tests
@@ -8,7 +9,7 @@ namespace ByCodersChallengeDotNet.Tests
         [Fact]
         public void DebugTest()
         {
-            var input = System.IO.File.ReadAllText("CNAB.txt");
+            using var input = System.IO.File.OpenRead("CNAB.txt");
 
             var operationService = new OperationService(new OperationRepository());
             var imported = operationService.ImportOperations(input);
