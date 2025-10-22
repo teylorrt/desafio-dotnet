@@ -1,6 +1,10 @@
 import React, { useState, useRef } from 'react';
 
-export const FileUploadForm: React.FC = () => {
+export interface FileUploadFormProps {
+    setFileUploaded: (value: boolean) => void;
+}
+
+export const FileUploadForm: React.FC<FileUploadFormProps> = ({ setFileUploaded }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null); // For programmatic click
 
@@ -14,7 +18,7 @@ export const FileUploadForm: React.FC = () => {
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // Prevent default form submission
-
+    setFileUploaded(true);
     if (!selectedFile) {
       alert('Please select a file to upload.');
       return;
@@ -35,16 +39,19 @@ export const FileUploadForm: React.FC = () => {
         console.log('File uploaded successfully:', data);
         alert('File uploaded successfully!');
         setSelectedFile(null); // Clear selected file after upload
+        setFileUploaded(true);
         if (fileInputRef.current) {
           fileInputRef.current.value = ''; // Reset file input
         }
       } else {
+        setFileUploaded(true);
         console.error('File upload failed:', response.statusText);
         alert('File upload failed.');
       }
     } catch (error) {
-      console.error('Error during file upload:', error);
-      alert('An error occurred during file upload.');
+        setFileUploaded(true);
+        console.error('Error during file upload:', error);
+        alert('An error occurred during file upload.');
     }
   };
 
