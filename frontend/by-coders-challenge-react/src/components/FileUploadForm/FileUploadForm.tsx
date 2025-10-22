@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const FileUploadForm: React.FC = () => {
+export const FileUploadForm: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null); // For programmatic click
 
@@ -72,5 +72,3 @@ const FileUploadForm: React.FC = () => {
     </form>
   );
 };
-
-export default FileUploadForm;
