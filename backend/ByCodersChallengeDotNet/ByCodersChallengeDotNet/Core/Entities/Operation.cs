@@ -1,20 +1,22 @@
 ﻿using ByCodersChallengeDotNet.Core.Enums;
+using ByCodersChallengeDotNet.Core.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace ByCodersChallengeDotNet.Core.Entities
 {
-    public class Operation
+    public partial class Operation
     {
         public long Id { get; set; }
         public TransactionType Type { get; set; }
-        public DateTime Date { get; set;  }
+        public DateOnly Date { get; set;  }
         public decimal Value { get; set; }
         public long CPF { get; set; }
-        public long Card {  get; set; }
+        public string Card {  get; set; }
         public int Time { get; set; }
         public string StoreOwner { get; set; }
         public string StoreName { get; set; }
 
-        public bool SetField(FieldType fieldType, string value)
+        public bool SetField(FieldType fieldType, ReadOnlySpan<char> value)
         {
             return fieldType switch
             {
@@ -30,37 +32,81 @@ namespace ByCodersChallengeDotNet.Core.Entities
             };
         }
 
-        private bool SetType(string value)
+        private bool SetType(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.Type, 1, value);
+
+            Type = new TransactionType
+            {
+                Type = int.Parse(value),
+            };
             return true;
         }
-        private bool SetDate(string value)
+        private bool SetDate(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.Date, 8, value);
+
+            int year = int.Parse(value[..4]);
+            int month = int.Parse(value[4..6]);
+            int day = int.Parse(value[6..]);
+            Date = new DateOnly(year, month, day);
+
             return true;
         }
-        private bool SetValue(string value)
+        private bool SetValue(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.Value, 10, value);
+            decimal _value = decimal.Parse(value);
+
+            Value = _value / 100.00m;
             return true;
         }
-        private bool SetCPF(string value)
+        private bool SetCPF(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.CPF, 11, value);
+            CPF = long.Parse(value);
             return true;
         }
-        private bool SetCard(string value)
+        private bool SetCard(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.Card, 12, value);
+            var _card = value.ToString();
+
+            if (!CardRegex().IsMatch(_card))
+            {
+                throw new InvalidFieldException(FieldType.Card);
+            }
+
+            Card = value.ToString();
             return true;
         }
-        private bool SetTime(string value)
+        private bool SetTime(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.Time, 6, value);
             return true;
         }
-        private bool SetStoreOwner(string value)
+        private bool SetStoreOwner(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.StoreOwner, 14, value);
+            StoreOwner = value.ToString();
             return true;
         }
-        private bool SetStoreName(string value)
+        private bool SetStoreName(ReadOnlySpan<char> value)
         {
+            AssertFieldSize(FieldType.StoreName, 18, value);
+            StoreName = value.ToString();
             return true;
         }
+
+        private static void AssertFieldSize(FieldType fieldType, int size, ReadOnlySpan<char> value)
+        {
+            if (value.Length != size)
+            {
+                throw new InvalidFieldException(fieldType);
+            }
+        }
+
+        [GeneratedRegex(@"^\d{4}\*{4}\d{4}$")]
+        private static partial Regex CardRegex();
     }
 }
