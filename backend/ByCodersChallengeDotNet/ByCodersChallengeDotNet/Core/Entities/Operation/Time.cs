@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
-    public partial class Time(ReadOnlySpan<char> value) : OperationField<DateTimeOffset>(new(FieldType.Time, 0, 0, 14), value, GetSlice)
+    public partial class Time(ReadOnlySpan<char> value) : OperationField<DateTime>(new(FieldType.Time, 0, 0, 14), value, GetSlice)
     {
         private static readonly Field DateField = new(FieldType.Date, 1, 8, 8);
         private static readonly Field TimeField = new(FieldType.Time, 42, 47, 6);
@@ -26,7 +26,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             var minute = int.Parse(value[10..12]);
             var second = int.Parse(value[12..]);
 
-            Value = new DateTimeOffset(year, month, day, hour, minute, second, TimeSpan.FromHours(-3));
+            Value = new DateTime(year, month, day, hour, minute, second);
         }
 
         public override bool Validate(ReadOnlySpan<char> value)

@@ -23,11 +23,10 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 	                tt.description,
 	                tt.nature,
 	                tt.sign,
-	                t.date,
+	                t.time AT TIME ZONE 'UTC-3' as time,
 	                t.value,
 	                t.cpf,
 	                t.card,
-	                t.time,
 	                t.store_owner as storeOwner,
 	                t.store_name as storeName
                 from public.""operation"" t
@@ -39,16 +38,27 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
         {
             _dbContext.DbConnection.Open();
 
-            int affectedRows = 0;
+            var affectedRows = 0;
+            var param = operations
+                .Select(o => new
+                {
+                    Type = o.Type.Value,
+                    value = o.Value.Value,
+                    Cpf = o.Cpf.Value,
+                    Card = o.Card.Value,
+                    Time = o.Time.Value,
+                    StoreOwner = o.StoreOwner.Value,
+                    StoreName = o.StoreName.Value,
+                });
 
             using (var transaction = _dbContext.DbConnection.BeginTransaction())
             {
                 try
                 {
                     affectedRows = _dbContext.DbConnection.Execute(
-                    sql: @"INSERT INTO public.""operation"" (type, date, value, cpf, card, time, store_owner, store_name) VALUES
-                               (@Type, @Date, @Value, @CPF, @Card, @Time, @StoreOwner, @StoreName)",
-                    param: operations,
+                    sql: @"INSERT INTO public.""operation"" (type, value, cpf, card, time, store_owner, store_name) VALUES
+                               (@Type, @Value, @Cpf, @Card, @Time, @StoreOwner, @StoreName)",
+                    param: param,
                     transaction: transaction
                     );
 

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS public.operation
 (
     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     "type" smallint NOT NULL,
-    "time" timestamp with time zone NOT NULL,
+    "time" timestamptz NOT NULL,
     "value" numeric(10,2) NOT NULL,
     cpf varchar(11) NOT NULL,
     "card" varchar(12) NOT NULL,
