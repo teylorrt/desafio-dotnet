@@ -5,9 +5,6 @@ services:
     container_name: frontend
     ports:
       - "5173:5173" # Map host port 5173 to container port 5173
-    # volumes:
-    #   - .:/app
-    #   - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true" # Required for file watching in some Docker environments
     depends_on:
@@ -16,6 +13,8 @@ services:
   api:
     build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
     container_name: api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on: 
       flyway:
         condition: service_completed_successfully
@@ -28,6 +27,8 @@ services:
   flyway:
     image: flyway/flyway:latest
     container_name: flyway
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     entrypoint: ["flyway", "-url=jdbc:postgresql://host.docker.internal:5432/bycoderschallenge", "-user=admin", "-password=superadmin", "-baselineOnMigrate=true", "-locations=filesystem:./sql", "migrate"]
     volumes:
       - ./db_migrations:/flyway/sql
