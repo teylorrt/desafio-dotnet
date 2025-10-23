@@ -1,4 +1,5 @@
-﻿using ByCodersChallengeDotNet.Infrastructure.DbContext;
+﻿using ByCodersChallengeDotNet.Infrastructure;
+using ByCodersChallengeDotNet.Infrastructure.DbContext;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Data;
@@ -14,8 +15,7 @@ namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
 
         public DbContextTest(IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("PostgresSQL");
-            _dbConnection = new DBConnectionTest(connectionString);
+            _dbConnection = new DBConnectionTest(Config.GetDefaultConnectionString(configuration));
         }
 
         public IDbConnection Connection => _dbConnection;
