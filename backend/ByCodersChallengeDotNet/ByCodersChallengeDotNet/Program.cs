@@ -17,11 +17,15 @@ namespace ByCodersChallengeDotNet
                 .AddTransient<IOperationRepository, OperationRepository>()
                 .AddTransient<IOperationService, OperationService>();
 
+            builder.Services.AddHealthChecks(); // Registers basic health check services
+
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            app.MapHealthChecks("/health"); // Exposes a /health endpoint
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

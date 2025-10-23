@@ -1,5 +1,39 @@
 name: bycoderschallenge
 services:
+  frontend:
+    build: ./frontend/by-coders-challenge-react
+    container_name: frontend
+    ports:
+      - "5173:5173" # Map host port 5173 to container port 5173
+    # volumes:
+    #   - .:/app
+    #   - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true" # Required for file watching in some Docker environments
+    depends_on:
+      api:
+        condition: service_started
+  api:
+    build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
+    container_name: api
+    depends_on: 
+      flyway:
+        condition: service_completed_successfully
+    ports:
+      - "5252:8080" # Map host port 5252 to container port 8080
+      - "7170:8081" # Map host port 7170 to container port 8081
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+  flyway:
+    image: flyway/flyway:latest
+    container_name: flyway
+    entrypoint: ["flyway", "-url=jdbc:postgresql://host.docker.internal:5432/bycoderschallenge", "-user=admin", "-password=superadmin", "-baselineOnMigrate=true", "-locations=filesystem:./sql", "migrate"]
+    volumes:
+      - ./db_migrations:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
   db:
     image: postgres:latest
     container_name: db
@@ -10,31 +44,12 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d bycoderschallenge"]
       interval: 5s
       timeout: 5s
       retries: 5
-  flyway:
-    image: flyway/flyway:latest
-    container_name: flyway
-    entrypoint: ["flyway", "-url=jdbc:postgresql://db:5432/bycoderschallenge", "-user=admin", "-password=superadmin", "-baselineOnMigrate=true", "migrate"]
-    volumes:
-      - ./db_migrations:/flyway/sql
-    depends_on:
-      - db
-  web-api:
-    build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
-    container_name: web-api
-    depends_on: 
-      - flyway
-    ports:
-      - "5252:8080" # Map host port 5252 to container port 8080
-      - "7170:8081" # Map host port 7170 to container port 8081
-    volumes:
-      - ./ByCodersChallengeDotNet:/src
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
 volumes:
   db_data:
+    name: "bycoderschallenge_data"
