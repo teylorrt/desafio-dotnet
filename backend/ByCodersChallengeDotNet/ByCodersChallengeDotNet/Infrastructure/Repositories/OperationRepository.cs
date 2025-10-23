@@ -31,12 +31,12 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 	                t.store_name as storeName
                 from public.""operation"" t
                 inner join transaction_type tt on tt.id = t.type";
-            return _dbContext.DbConnection.Query<OperationModel>(query);
+            return _dbContext.Connection.Query<OperationModel>(sql: query, transaction: _dbContext.Transaction);
         }
 
         public bool Save(IEnumerable<Operation> operations)
         {
-            _dbContext.DbConnection.Open();
+            _dbContext.OpenConnection();
 
             var affectedRows = 0;
             var param = operations
@@ -51,27 +51,27 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
                     StoreName = o.StoreName.Value,
                 });
 
-            using (var transaction = _dbContext.DbConnection.BeginTransaction())
+            using (var transaction = _dbContext.BeginTransaction())
             {
                 try
                 {
-                    affectedRows = _dbContext.DbConnection.Execute(
+                    affectedRows = _dbContext.Connection.Execute(
                     sql: @"INSERT INTO public.""operation"" (type, value, cpf, card, time, store_owner, store_name) VALUES
                                (@Type, @Value, @Cpf, @Card, @Time, @StoreOwner, @StoreName)",
                     param: param,
-                    transaction: transaction
+                    transaction: _dbContext.Transaction
                     );
 
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback();
+                    _dbContext.RollbackTransaction();
                     throw;
                 }
             }
 
-            _dbContext.DbConnection.Close();
+            _dbContext.CloseConnection();
 
             return affectedRows == operations.Count();
         }
