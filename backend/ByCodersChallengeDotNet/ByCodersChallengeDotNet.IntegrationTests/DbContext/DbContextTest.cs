@@ -14,7 +14,7 @@ namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
 
         public DbContextTest(IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("PostegreSQL");
+            string? connectionString = configuration.GetConnectionString("PostgresSQL");
             _dbConnection = new DBConnectionTest(connectionString);
         }
 

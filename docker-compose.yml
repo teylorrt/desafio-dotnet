@@ -24,6 +24,7 @@ services:
       - "7170:8081" # Map host port 7170 to container port 8081
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings: PostgresSQL=Server=host.docker.internal;Port=5432;Database=bycoderschallenge;Username=admin;Password=superadmin;
   flyway:
     image: flyway/flyway:latest
     container_name: flyway

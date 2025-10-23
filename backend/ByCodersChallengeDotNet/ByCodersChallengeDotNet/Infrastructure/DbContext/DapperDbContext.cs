@@ -10,7 +10,7 @@ namespace ByCodersChallengeDotNet.Infrastructure.DbContext
 
         public DapperDbContext(IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("PostegreSQL");
+            string? connectionString = configuration.GetConnectionString("PostgresSQL");
             _dbConnection = new NpgsqlConnection(connectionString);
         }
 
