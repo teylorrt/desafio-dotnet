@@ -23,7 +23,7 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 	                tt.description,
 	                tt.nature,
 	                tt.sign,
-	                t.time AT TIME ZONE 'UTC-3' as time,
+	                TO_CHAR(t.time AT TIME ZONE 'UTC-3', 'DD/MM/YYYY HH24:MI:SS') as time,
 	                t.value,
 	                t.cpf,
 	                t.card,

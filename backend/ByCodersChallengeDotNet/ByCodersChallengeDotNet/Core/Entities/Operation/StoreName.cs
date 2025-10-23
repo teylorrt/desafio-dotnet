@@ -4,7 +4,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
     public class StoreName(ReadOnlySpan<char> value) : OperationField<string>(Field, value, GetSlice)
     {
-        private static new readonly Field Field = new(FieldType.StoreName, 62, 80, 18);
+        private static new readonly Field Field = new(FieldType.StoreName, 62, 80, 19);
 
         private static new readonly Func<ReadOnlySpan<char>, ReadOnlySpan<char>> GetSlice = (_value) =>
         {

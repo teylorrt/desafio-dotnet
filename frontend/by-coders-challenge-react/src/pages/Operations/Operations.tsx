@@ -6,31 +6,52 @@ import { OperationTable } from "../../components/OperationTable/OperationTable";
 export const Operations: React.FC = () => {
   const [fileUploaded, setFileUploaded] = useState<boolean>(false);
   const [operationGroups, setOperationGroups] = useState<OperationGroupModel[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
 
   useEffect(() => {
-    if(fileUploaded) {
+    if(fileUploaded || loading) {
         fetchOperations();
-        // setFileUploaded(false);
+        setLoading(false);
+        setFileUploaded(false);
     }
   }, [fileUploaded]);
 
-  const fetchOperations = async () => {
+  useEffect(() => {
+    if(operationGroups) {
+      setLoading(false);
+    }
+  }, [operationGroups]);
+
+  const setSuccessUpload = () => {
+    setFileUploaded(true);
+  };
+
+  const fetchOperations = () => {
       try {
-        const response = await fetch('http://localhost:5252/api/operation/list-by-store');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: OperationGroupModel[] = await response.json();
-        setOperationGroups(data);
+        setLoading(true);
+        fetch('http://localhost:5252/api/operation/list-by-store')
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return await response.json();
+        })
+        .then((data: OperationGroupModel[]) => {
+          setOperationGroups(data);
+        })
+        .catch((err: any) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
       } catch (err: any) {
         setError(err.message);
-      } finally {
         setLoading(false);
       }
-};
+    }
 
   if (loading) return <div>Loading operations...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -38,7 +59,7 @@ export const Operations: React.FC = () => {
   return (
     <>
       <h1>Import Operations</h1>
-      <FileUploadForm setFileUploaded={setFileUploaded} />
+      <FileUploadForm setSuccessUpload={setSuccessUpload} />
       <h1>Imported Operations</h1>
       {operationGroups?.map((group) => (
         <OperationTable

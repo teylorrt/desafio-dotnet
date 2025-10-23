@@ -22,7 +22,7 @@ namespace ByCodersChallengeDotNet.Presentation.Controllers
                 _operationService.ImportOperations(stream);
             }
 
-            return Ok("File uploaded successfully.");
+            return Ok("SUCCESS");
         }
 
         [HttpGet("list-by-store")]

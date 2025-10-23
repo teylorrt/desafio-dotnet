@@ -31,9 +31,8 @@ export const OperationTable: React.FC<OperationTableProps> = ({ title, operation
 
   return (
     <div>
-      <h2>{`Operations of ${title}`}</h2>
+      <h2>{`${title} -- Account Balance: ${valueMask(accountBalance)}`}</h2>
       <Table headers={headers} data={operations} renderRow={renderOperationRow} />
-      <h2>{`Account Balance: ${valueMask(accountBalance)}`}</h2>
     </div>
   );
 }

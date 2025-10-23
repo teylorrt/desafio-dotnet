@@ -62,7 +62,10 @@ namespace ByCodersChallengeDotNet.Application.Services
 
             foreach (var operation in operations)
             {
-                operation.Value *= operation.Sign.Equals(TransactionSign.Positive) ? 1m : -1m;
+                if(operation.Sign[0].Equals((char)TransactionSign.Negative))
+                {
+                    operation.Value *= -1m;
+                }
             }
 
             return operations
