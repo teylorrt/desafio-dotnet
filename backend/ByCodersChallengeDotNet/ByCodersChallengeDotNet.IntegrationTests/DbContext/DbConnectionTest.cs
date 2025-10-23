@@ -1,7 +1,7 @@
 ﻿using Npgsql;
 using System.Data;
 
-namespace ByCodersChallengeDotNet.Tests.DbContext
+namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
 {
     public class DBConnectionTest : IDbConnection
     {

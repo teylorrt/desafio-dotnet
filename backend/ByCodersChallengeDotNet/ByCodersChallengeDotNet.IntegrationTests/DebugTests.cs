@@ -1,12 +1,12 @@
 ﻿using ByCodersChallengeDotNet.Application.Services;
+using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
 
-namespace ByCodersChallengeDotNet.Tests
+namespace ByCodersChallengeDotNet.IntegrationTests
 {
     public class DebugTests : TestBase
     {
-        [Fact]
-        public void DebugTest()
+        private IEnumerable<OperationGroupModel> ImportOperations()
         {
             using var input = System.IO.File.OpenRead("CNAB.txt");
 
@@ -18,16 +18,28 @@ namespace ByCodersChallengeDotNet.Tests
             var list = operationService.ListOperationsByStore();
 
             Assert.Equal(21, list.SelectMany(d => d.Operations).Count());
+
+            return list;
         }
 
-        [Fact]
-        public void TestList()
+        [Fact, Trait("Category", "Integration")]
+        public void TestImportOperations()
         {
+            _ = ImportOperations();
+        }
+
+        [Fact, Trait("Category", "Integration")]
+        public void TestListOperationsByStore()
+        {
+            var ímported = ImportOperations();
+
+            var importedCount = ímported.SelectMany(d => d.Operations).Count();
+
             var operationService = new OperationService(new OperationRepository(DbContext));
 
             var list = operationService.ListOperationsByStore();
 
-            Assert.Equal(21, list.SelectMany(d => d.Operations).Count());
+            Assert.Equal(importedCount, list.SelectMany(d => d.Operations).Count());
         }
     }
 }

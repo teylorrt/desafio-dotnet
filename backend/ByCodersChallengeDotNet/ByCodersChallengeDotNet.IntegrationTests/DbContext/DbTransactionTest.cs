@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace ByCodersChallengeDotNet.Tests.DbContext
+namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
 {
     public class DbTransactionTest : DbTransaction
     {

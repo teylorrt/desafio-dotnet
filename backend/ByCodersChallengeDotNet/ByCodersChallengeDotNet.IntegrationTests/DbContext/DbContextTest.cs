@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Data;
 
-namespace ByCodersChallengeDotNet.Tests.DbContext
+namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
 {
     public class DbContextTest : IDbContext
     {

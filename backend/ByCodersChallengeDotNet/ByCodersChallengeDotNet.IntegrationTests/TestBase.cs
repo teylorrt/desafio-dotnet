@@ -1,8 +1,8 @@
 ﻿using ByCodersChallengeDotNet.Infrastructure.DbContext;
-using ByCodersChallengeDotNet.Tests.DbContext;
+using ByCodersChallengeDotNet.IntegrationTests.DbContext;
 using Microsoft.Extensions.Configuration;
 
-namespace ByCodersChallengeDotNet.Tests
+namespace ByCodersChallengeDotNet.IntegrationTests
 {
     public class TestBase : IDisposable
     {
