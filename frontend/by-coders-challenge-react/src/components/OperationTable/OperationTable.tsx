@@ -21,7 +21,7 @@ export const OperationTable: React.FC<OperationTableProps> = ({ title, operation
         <td>{operation.nature}</td>
         <td>{operation.sign}</td>
         <td>{operation.time}</td>
-        <td>{valueMask(operation.value.toFixed(2))}</td>
+        <td>{valueMask(operation.value)}</td>
         <td>{cpfMask(operation.cpf.toString())}</td>
         <td>{operation.card}</td>
         <td>{operation.storeOwner}</td>
@@ -33,7 +33,7 @@ export const OperationTable: React.FC<OperationTableProps> = ({ title, operation
     <div>
       <h2>{`Operations of ${title}`}</h2>
       <Table headers={headers} data={operations} renderRow={renderOperationRow} />
-      <h2>{`Account Balance: ${valueMask(accountBalance.toFixed(2))}`}</h2>
+      <h2>{`Account Balance: ${valueMask(accountBalance)}`}</h2>
     </div>
   );
 }

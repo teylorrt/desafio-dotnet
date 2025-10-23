@@ -7,6 +7,9 @@ export const cpfMask = (value: string) => {
     .replace(/(-\d{2})\d+?$/, '$1');
 }
 
-export const valueMask = (value: string) => {
-    return `R$ ${value}`;
+export const valueMask = (value: number) => {
+    return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
 }
