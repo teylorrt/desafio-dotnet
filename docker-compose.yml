@@ -15,9 +15,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  migrations:
+      build: ./migrations_image # Dockerfile for your migration tool
+      depends_on:
+        - db
+      environment:
+        DATABASE_URL: postgres://your_user:your_password@db:5432/your_database_name
+      command: ["./your_migration_tool", "migrate", "up"] # Example command
   web-api:
     build: ./backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet
     container_name: by-coders-challenge-api
+    depends_on: 
+      - db
     ports:
       - "5252:8080" # Map host port 5252 to container port 8080
       - "7170:8081" # Map host port 7170 to container port 8081
@@ -25,5 +34,3 @@ services:
       - ./ByCodersChallengeDotNet:/src # Mount the local app for development
     environment:
       ASPNETCORE_ENVIRONMENT: Development # Example environment variable
-volumes:
-  db_data:
