@@ -17,7 +17,7 @@
         Type,
         Date,
         Value,
-        CPF,
+        Cpf,
         Card,
         Time,
         StoreOwner,

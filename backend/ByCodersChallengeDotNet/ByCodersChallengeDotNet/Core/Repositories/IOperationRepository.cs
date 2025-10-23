@@ -1,4 +1,4 @@
-﻿using ByCodersChallengeDotNet.Core.Entities;
+﻿using ByCodersChallengeDotNet.Core.Entities.Operation;
 using ByCodersChallengeDotNet.Core.Models;
 
 namespace ByCodersChallengeDotNet.Core.Repositories

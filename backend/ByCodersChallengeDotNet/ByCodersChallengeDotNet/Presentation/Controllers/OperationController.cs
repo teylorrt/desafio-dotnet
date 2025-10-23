@@ -1,5 +1,4 @@
-﻿using ByCodersChallengeDotNet.Core.Entities;
-using ByCodersChallengeDotNet.Core.Models;
+﻿using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 

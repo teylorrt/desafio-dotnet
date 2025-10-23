@@ -1,5 +1,4 @@
-﻿using ByCodersChallengeDotNet.Core.Entities;
-using ByCodersChallengeDotNet.Core.Enums;
+﻿using ByCodersChallengeDotNet.Core.Enums;
 
 namespace ByCodersChallengeDotNet.Core.Models
 {

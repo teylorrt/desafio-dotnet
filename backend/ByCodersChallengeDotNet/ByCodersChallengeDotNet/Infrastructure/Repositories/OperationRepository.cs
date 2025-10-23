@@ -1,4 +1,4 @@
-﻿using ByCodersChallengeDotNet.Core.Entities;
+﻿using ByCodersChallengeDotNet.Core.Entities.Operation;
 using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Repositories;
 using ByCodersChallengeDotNet.Infrastructure.DbContext;

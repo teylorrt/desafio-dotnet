@@ -1,6 +1,6 @@
 ﻿using ByCodersChallengeDotNet.Core.Enums;
 
-namespace ByCodersChallengeDotNet.Application.Models
+namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
     public record Field(FieldType Type, int Start, int End, int Size)
     {

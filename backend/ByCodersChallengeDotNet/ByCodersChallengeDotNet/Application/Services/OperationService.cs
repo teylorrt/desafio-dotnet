@@ -1,5 +1,4 @@
-﻿using ByCodersChallengeDotNet.Application.Models;
-using ByCodersChallengeDotNet.Core.Entities;
+﻿using ByCodersChallengeDotNet.Core.Entities.Operation;
 using ByCodersChallengeDotNet.Core.Enums;
 using ByCodersChallengeDotNet.Core.Exceptions;
 using ByCodersChallengeDotNet.Core.Models;
@@ -13,19 +12,6 @@ namespace ByCodersChallengeDotNet.Application.Services
     public class OperationService : IOperationService
     {
         private readonly IOperationRepository _operationRepository;
-        private static readonly List<Field> Fields =
-            [
-                new Field(FieldType.Type, 0, 0, 1),
-                new Field(FieldType.Date, 1, 8, 8),
-                new Field(FieldType.Value, 9, 18, 10),
-                new Field(FieldType.CPF, 19, 29, 11),
-                new Field(FieldType.Card, 30, 41, 12),
-                new Field(FieldType.Time, 42, 47, 6),
-                new Field(FieldType.StoreOwner, 48, 61, 14),
-                new Field(FieldType.StoreName, 62, 80, 19),
-            ];
-
-        private const int NumberOfFields = 8;
 
         public OperationService(IOperationRepository operationRepository)
         {
@@ -51,20 +37,16 @@ namespace ByCodersChallengeDotNet.Application.Services
             {
                 ReadOnlySpan<char> slice = operationText.AsSpan();
 
-                var operation = new Operation();
-
-                foreach (var field in Fields.OrderBy(f => f.Type))
+                var operation = new Operation()
                 {
-                    var i = 1;
-
-                    if (field.Type is FieldType.StoreName)
-                    {
-                        i = 0; 
-                    }
-
-                    var value = slice[field.Start.. (field.End+i)];
-                    operation.SetField(field.Type, value);
-                }
+                    Type = new(slice),
+                    Time = new(slice),
+                    Value = new(slice),
+                    Cpf = new(slice),
+                    Card = new(slice),
+                    StoreOwner = new(slice),
+                    StoreName = new(slice),
+                };
 
                 operations.Add(operation);
             }
