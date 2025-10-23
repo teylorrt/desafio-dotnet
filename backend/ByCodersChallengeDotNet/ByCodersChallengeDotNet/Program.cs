@@ -15,10 +15,7 @@ namespace ByCodersChallengeDotNet
 
             // Add services to the container.
             builder.Services
-                // Singletons
-                .AddSingleton<IDbContext, DapperDbContext>()
-
-                // Transients
+                .AddTransient<IDbContext, DapperDbContext>()
                 .AddTransient<IOperationRepository, OperationRepository>()
                 .AddTransient<IOperationService, OperationService>();
 

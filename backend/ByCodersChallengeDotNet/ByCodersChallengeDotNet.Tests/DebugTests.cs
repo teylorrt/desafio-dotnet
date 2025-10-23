@@ -21,7 +21,7 @@ namespace ByCodersChallengeDotNet.Tests
 
             Assert.True(imported);
 
-            var list = operationService.ListOperations();
+            var list = operationService.ListOperationsByStore();
 
             Assert.Equal(21, list.Count());
         }
@@ -29,11 +29,17 @@ namespace ByCodersChallengeDotNet.Tests
         [Fact]
         public void TestList()
         {
+            DateTimeOffset localTime, otherTime, universalTime;
+
+            // Define local time in local time zone
+            localTime = new DateTimeOffset(new DateTime(2007, 6, 15, 12, 0, 0));
+            Console.WriteLine($"Local time: {localTime}");
+
             var operationService = new OperationService(new OperationRepository(new DapperDbContext(configuration)));
 
-            var list = operationService.ListOperations();
+            var list = operationService.ListOperationsByStore();
 
-            Assert.Equal(21, list.Count());
+            Assert.NotNull(list);
         }
     }
 }

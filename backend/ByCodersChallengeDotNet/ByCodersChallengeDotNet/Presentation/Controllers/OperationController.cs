@@ -26,10 +26,10 @@ namespace ByCodersChallengeDotNet.Presentation.Controllers
             return Ok("File uploaded successfully.");
         }
 
-        [HttpGet("list")]
-        public IEnumerable<OperationDTO> ListOperations()
+        [HttpGet("list-by-store")]
+        public IEnumerable<OperationGroupModel> ListOperationsByStore()
         {
-            return _operationService.ListOperations();
+            return _operationService.ListOperationsByStore();
         }
     }
 }

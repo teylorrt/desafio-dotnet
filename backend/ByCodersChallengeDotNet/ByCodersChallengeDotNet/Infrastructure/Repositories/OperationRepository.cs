@@ -15,7 +15,7 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<OperationDTO> List()
+        public IEnumerable<OperationModel> List()
         {
             string query = @"select 
 	                t.id,
@@ -32,7 +32,7 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 	                t.store_name as storeName
                 from public.""operation"" t
                 inner join transaction_type tt on tt.id = t.type";
-            return _dbContext.DbConnection.Query<OperationDTO>(query);
+            return _dbContext.DbConnection.Query<OperationModel>(query);
         }
 
         public bool Save(IEnumerable<Operation> operations)

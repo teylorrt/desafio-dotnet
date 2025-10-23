@@ -74,9 +74,23 @@ namespace ByCodersChallengeDotNet.Application.Services
             return saved;
         }
 
-        public IEnumerable<OperationDTO> ListOperations()
+        public IEnumerable<OperationGroupModel> ListOperationsByStore()
         {
-            return _operationRepository.List();
+            var operations = _operationRepository.List();
+
+            foreach (var operation in operations)
+            {
+                operation.Value *= operation.Sign.Equals(TransactionSign.Positive) ? 1m : -1m;
+            }
+
+            return operations
+                .GroupBy(o => o.StoreName)
+                .Select(g => new OperationGroupModel
+                {
+                    Operations = g,
+                    Name = g.Key,
+                    AccountBalance = g.Sum(s => s.Value)
+                });
         }
 
         private static ReadOnlySpan<char> GetSpanChar(Stream fileStream)
