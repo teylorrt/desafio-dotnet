@@ -4,12 +4,12 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
     public class StoreOwner(ReadOnlySpan<char> value) : OperationField<string>(new(FieldType.StoreOwner, 48, 61, 14), value)
     {
-        public override void SetValue(ReadOnlySpan<char> value)
+        protected override void SetFieldValue(ReadOnlySpan<char> value)
         {
             Value = value.Trim().ToString();
         }
 
-        public override bool Validate(ReadOnlySpan<char> value)
+        protected override bool ValidateField(ReadOnlySpan<char> value)
         {
             return !string.IsNullOrWhiteSpace(value.Trim().ToString());
         }

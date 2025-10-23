@@ -16,7 +16,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             return string.Concat(date, time).AsSpan();
         };
 
-        public override void SetValue(ReadOnlySpan<char> value)
+        protected override void SetFieldValue(ReadOnlySpan<char> value)
         {
             var year = int.Parse(value[..4]);
             var month = int.Parse(value[4..6]);
@@ -29,7 +29,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = new DateTime(year, month, day, hour, minute, second);
         }
 
-        public override bool Validate(ReadOnlySpan<char> value)
+        protected override bool ValidateField(ReadOnlySpan<char> value)
         {
             return TimeRegex().IsMatch(value);
         }

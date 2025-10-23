@@ -4,14 +4,14 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
     public class Value(ReadOnlySpan<char> value) : OperationField<decimal>(new(FieldType.Value, 9, 18, 10), value)
     {
-        public override void SetValue(ReadOnlySpan<char> value)
+        protected override void SetFieldValue(ReadOnlySpan<char> value)
         {
             decimal _value = decimal.Parse(value);
 
             Value = _value / 100.00m;
         }
 
-        public override bool Validate(ReadOnlySpan<char> value)
+        protected override bool ValidateField(ReadOnlySpan<char> value)
         {
             return decimal.TryParse(value, out _);
         }

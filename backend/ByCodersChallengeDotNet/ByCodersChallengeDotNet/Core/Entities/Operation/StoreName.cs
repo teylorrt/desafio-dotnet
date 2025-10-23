@@ -8,12 +8,12 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 
         private static new readonly Func<ReadOnlySpan<char>, ReadOnlySpan<char>> GetSlice = (_value) => _value[Field.Start..Field.End];
 
-        public override void SetValue(ReadOnlySpan<char> value)
+        protected override void SetFieldValue(ReadOnlySpan<char> value)
         {
             Value = value.Trim().ToString();
         }
 
-        public override bool Validate(ReadOnlySpan<char> value)
+        protected override bool ValidateField(ReadOnlySpan<char> value)
         {
             return !string.IsNullOrWhiteSpace(value.Trim().ToString());
         }

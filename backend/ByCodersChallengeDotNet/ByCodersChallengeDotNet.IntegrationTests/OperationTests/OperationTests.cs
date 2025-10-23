@@ -2,9 +2,9 @@
 using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
 
-namespace ByCodersChallengeDotNet.IntegrationTests
+namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
 {
-    public class DebugTests : TestBase
+    public class OperationTests : IntegrationTestBase
     {
         private IEnumerable<OperationGroupModel> ImportOperations()
         {

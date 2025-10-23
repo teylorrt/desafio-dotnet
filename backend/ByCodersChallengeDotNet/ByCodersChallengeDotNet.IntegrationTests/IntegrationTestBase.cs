@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ByCodersChallengeDotNet.IntegrationTests
 {
-    public class TestBase : IDisposable
+    public class IntegrationTestBase : IDisposable
     {
         private static readonly IConfigurationRoot _configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -12,7 +12,7 @@ namespace ByCodersChallengeDotNet.IntegrationTests
 
         protected readonly IDbContext DbContext;
 
-        public TestBase()
+        public IntegrationTestBase()
         {
             DbContext = new DbContextTest(_configuration);
 

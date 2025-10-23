@@ -34,5 +34,22 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 
             return true;
         }
+
+        protected override void SetValue(ReadOnlySpan<char> value)
+        {
+            SetFieldValue(value);
+        }
+
+        protected override bool Validate(ReadOnlySpan<char> value)
+        {
+            if(!ValidateField(value))
+            {
+                throw new InvalidFieldException(Field.Type);
+            }
+            return true;
+        }
+
+        protected abstract bool ValidateField(ReadOnlySpan<char> value);
+        protected abstract void SetFieldValue(ReadOnlySpan<char> value);
     }
 }
