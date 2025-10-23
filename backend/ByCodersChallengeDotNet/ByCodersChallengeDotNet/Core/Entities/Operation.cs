@@ -8,6 +8,7 @@ namespace ByCodersChallengeDotNet.Core.Entities
     {
         public long Id { get; set; }
         public TransactionType Type { get; set; }
+        public int TypeId { get; set; }
         public DateOnly Date { get; set;  }
         public decimal Value { get; set; }
         public long CPF { get; set; }
@@ -36,10 +37,7 @@ namespace ByCodersChallengeDotNet.Core.Entities
         {
             AssertFieldSize(FieldType.Type, 1, value);
 
-            Type = new TransactionType
-            {
-                Type = int.Parse(value),
-            };
+            TypeId = int.Parse(value);
             return true;
         }
         private bool SetDate(ReadOnlySpan<char> value)

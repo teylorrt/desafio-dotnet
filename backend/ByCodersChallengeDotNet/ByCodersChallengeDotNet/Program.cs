@@ -2,6 +2,7 @@
 using ByCodersChallengeDotNet.Application.Services;
 using ByCodersChallengeDotNet.Core.Repositories;
 using ByCodersChallengeDotNet.Core.Services;
+using ByCodersChallengeDotNet.Infrastructure.DbContext;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
 
 namespace ByCodersChallengeDotNet
@@ -14,6 +15,10 @@ namespace ByCodersChallengeDotNet
 
             // Add services to the container.
             builder.Services
+                // Singletons
+                .AddSingleton<IDbContext, DapperDbContext>()
+
+                // Transients
                 .AddTransient<IOperationRepository, OperationRepository>()
                 .AddTransient<IOperationService, OperationService>();
 
