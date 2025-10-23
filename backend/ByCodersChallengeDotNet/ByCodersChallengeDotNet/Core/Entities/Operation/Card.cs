@@ -10,7 +10,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = value.ToString();
         }
 
-        protected override bool ValidateField(ReadOnlySpan<char> value)
+        public override bool ValidateField(ReadOnlySpan<char> value)
         {
             return CardRegex().IsMatch(value);
         }

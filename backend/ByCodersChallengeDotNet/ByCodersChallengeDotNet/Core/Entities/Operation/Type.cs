@@ -9,7 +9,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = int.Parse(value);
         }
 
-        protected override bool ValidateField(ReadOnlySpan<char> value)
+        public override bool ValidateField(ReadOnlySpan<char> value)
         {
             return int.TryParse(value, out _);
         }

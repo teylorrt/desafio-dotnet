@@ -9,7 +9,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = value.Trim().ToString();
         }
 
-        protected override bool ValidateField(ReadOnlySpan<char> value)
+        public override bool ValidateField(ReadOnlySpan<char> value)
         {
             return !string.IsNullOrWhiteSpace(value.Trim().ToString());
         }

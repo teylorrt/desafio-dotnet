@@ -6,14 +6,19 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
     {
         private static new readonly Field Field = new(FieldType.StoreName, 62, 80, 18);
 
-        private static new readonly Func<ReadOnlySpan<char>, ReadOnlySpan<char>> GetSlice = (_value) => _value[Field.Start..Field.End];
+        private static new readonly Func<ReadOnlySpan<char>, ReadOnlySpan<char>> GetSlice = (_value) =>
+        {
+            AssertSliceSize(Field.Type, Field.Start, Field.End, _value);
+
+            return _value[Field.Start..Field.End];
+        };
 
         protected override void SetFieldValue(ReadOnlySpan<char> value)
         {
             Value = value.Trim().ToString();
         }
 
-        protected override bool ValidateField(ReadOnlySpan<char> value)
+        public override bool ValidateField(ReadOnlySpan<char> value)
         {
             return !string.IsNullOrWhiteSpace(value.Trim().ToString());
         }

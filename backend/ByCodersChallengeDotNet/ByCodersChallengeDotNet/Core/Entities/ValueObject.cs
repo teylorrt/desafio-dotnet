@@ -4,7 +4,7 @@ namespace ByCodersChallengeDotNet.Core.Entities
     public abstract class ValueObject<TValue, TInput> where TInput : notnull, allows ref struct
     {
         public TValue? Value { get; protected set; }
-        protected abstract bool Validate(TInput? value);
+        public abstract bool Validate(TInput? value);
         protected abstract void SetValue(TInput? value);
 
         public ValueObject(TInput? value)

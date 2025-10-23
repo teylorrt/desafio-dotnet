@@ -10,6 +10,11 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 
         private static new readonly Func<ReadOnlySpan<char>, ReadOnlySpan<char>> GetSlice = (_value) =>
         {
+            int start = DateField.Start;
+            int end = TimeField.End + 1;
+
+            AssertSliceSize(FieldType.Time, start, end, _value);
+
             var date = _value[DateField.Start..(DateField.End + 1)];
             var time = _value[TimeField.Start..(TimeField.End + 1)];
 
@@ -29,7 +34,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = new DateTime(year, month, day, hour, minute, second);
         }
 
-        protected override bool ValidateField(ReadOnlySpan<char> value)
+        public override bool ValidateField(ReadOnlySpan<char> value)
         {
             return TimeRegex().IsMatch(value);
         }

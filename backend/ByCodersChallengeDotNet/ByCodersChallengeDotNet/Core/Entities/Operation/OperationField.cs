@@ -1,4 +1,5 @@
-﻿using ByCodersChallengeDotNet.Core.Exceptions;
+﻿using ByCodersChallengeDotNet.Core.Enums;
+using ByCodersChallengeDotNet.Core.Exceptions;
 
 namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
@@ -9,27 +10,29 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
         public OperationField(Field field, ReadOnlySpan<char> value) : base(GetSlice(field, value))
         {
             Field = field;
-
-            AssertFieldSize(field, GetSlice(field, value));
         }
 
         public OperationField(Field field, ReadOnlySpan<char> value, Func<ReadOnlySpan<char>, ReadOnlySpan<char>> getSlice) : base(getSlice.Invoke(value))
         {
             Field = field;
-
-            AssertFieldSize(field, getSlice.Invoke(value));
         }
 
-        protected static ReadOnlySpan<char> GetSlice(Field field, ReadOnlySpan<char> value)
+        public static ReadOnlySpan<char> GetSlice(Field field, ReadOnlySpan<char> value)
         {
-            return value[field.Start..(field.End + 1)];
+            int start = field.Start;
+            int end = (field.End + 1);
+            
+            AssertSliceSize(field.Type, start, end, value);
+
+            return value[start..end];
         }
 
-        public static bool AssertFieldSize(Field field, ReadOnlySpan<char> value)
+        public static bool AssertSliceSize(FieldType type, int start, int end, ReadOnlySpan<char> value)
         {
-            if (value.Length != field.Size)
+            
+            if (start > value.Length - 1 || end > value.Length)
             {
-                throw new InvalidFieldException(field.Type);
+                throw new InvalidFieldException(type);
             }
 
             return true;
@@ -40,7 +43,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             SetFieldValue(value);
         }
 
-        protected override bool Validate(ReadOnlySpan<char> value)
+        public override bool Validate(ReadOnlySpan<char> value)
         {
             if(!ValidateField(value))
             {
@@ -49,7 +52,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             return true;
         }
 
-        protected abstract bool ValidateField(ReadOnlySpan<char> value);
+        public abstract bool ValidateField(ReadOnlySpan<char> value);
         protected abstract void SetFieldValue(ReadOnlySpan<char> value);
     }
 }
