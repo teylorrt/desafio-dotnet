@@ -30,7 +30,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
         public static bool AssertSliceSize(FieldType type, int start, int end, ReadOnlySpan<char> value)
         {
             
-            if (start > value.Length - 1 || end > value.Length)
+            if (start > value.Length - 1 || (end - 1) > value.Length)
             {
                 throw new InvalidFieldException(type);
             }
