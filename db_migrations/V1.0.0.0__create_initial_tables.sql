@@ -21,8 +21,8 @@ INSERT INTO public.transaction_type (id, description, nature, sign) VALUES
   (8, 'DOC Receipt', 'I', '+'),
   (9, 'Rent', 'E', '-');
 
--- Transaction Table
-CREATE TABLE IF NOT EXISTS public.transaction
+-- Operation Table
+CREATE TABLE IF NOT EXISTS public.operation
 (
     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     "type" smallint NOT NULL,
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS public.transaction
     "time" time without time zone NOT NULL,
     store_owner varchar(14) NOT NULL,
     store_name varchar(19) NOT NULL,
-    CONSTRAINT transaction_pkey PRIMARY KEY (id),
-    CONSTRAINT "fk_transaction.type" FOREIGN KEY (type)
+    CONSTRAINT operation_pkey PRIMARY KEY (id),
+    CONSTRAINT "fk_operation.type" FOREIGN KEY (type)
         REFERENCES public.transaction_type (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

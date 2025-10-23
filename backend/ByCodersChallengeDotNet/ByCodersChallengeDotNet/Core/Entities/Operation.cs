@@ -7,13 +7,12 @@ namespace ByCodersChallengeDotNet.Core.Entities
     public partial class Operation
     {
         public long Id { get; set; }
-        public TransactionType Type { get; set; }
-        public int TypeId { get; set; }
-        public DateOnly Date { get; set;  }
+        public int Type { get; set; }
+        public DateTime Date { get; set;  }
         public decimal Value { get; set; }
         public long CPF { get; set; }
         public string Card {  get; set; }
-        public int Time { get; set; }
+        public TimeSpan Time { get; set; }
         public string StoreOwner { get; set; }
         public string StoreName { get; set; }
 
@@ -37,7 +36,7 @@ namespace ByCodersChallengeDotNet.Core.Entities
         {
             AssertFieldSize(FieldType.Type, 1, value);
 
-            TypeId = int.Parse(value);
+            Type = int.Parse(value);
             return true;
         }
         private bool SetDate(ReadOnlySpan<char> value)
@@ -47,7 +46,7 @@ namespace ByCodersChallengeDotNet.Core.Entities
             int year = int.Parse(value[..4]);
             int month = int.Parse(value[4..6]);
             int day = int.Parse(value[6..]);
-            Date = new DateOnly(year, month, day);
+            Date = new DateTime(year, month, day);
 
             return true;
         }
@@ -81,18 +80,20 @@ namespace ByCodersChallengeDotNet.Core.Entities
         private bool SetTime(ReadOnlySpan<char> value)
         {
             AssertFieldSize(FieldType.Time, 6, value);
+
+            Time = new TimeSpan(long.Parse(value));
             return true;
         }
         private bool SetStoreOwner(ReadOnlySpan<char> value)
         {
             AssertFieldSize(FieldType.StoreOwner, 14, value);
-            StoreOwner = value.ToString();
+            StoreOwner = value.Trim().ToString();
             return true;
         }
         private bool SetStoreName(ReadOnlySpan<char> value)
         {
             AssertFieldSize(FieldType.StoreName, 18, value);
-            StoreName = value.ToString();
+            StoreName = value.Trim().ToString();
             return true;
         }
 

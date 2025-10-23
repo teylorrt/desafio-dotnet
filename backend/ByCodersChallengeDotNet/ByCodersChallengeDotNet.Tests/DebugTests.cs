@@ -25,5 +25,15 @@ namespace ByCodersChallengeDotNet.Tests
 
             Assert.Equal(21, list.Count());
         }
+
+        [Fact]
+        public void TestList()
+        {
+            var operationService = new OperationService(new OperationRepository(new DapperDbContext(configuration)));
+
+            var list = operationService.ListOperations();
+
+            Assert.Equal(21, list.Count());
+        }
     }
 }

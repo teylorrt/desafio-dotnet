@@ -2,8 +2,8 @@
 {
     public enum TransactionNature
     {
-        Income,
-        Expense,
+        Income = 'I',
+        Expense = 'E',
     }
 
     public enum TransactionSign

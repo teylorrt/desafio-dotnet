@@ -1,4 +1,5 @@
 ﻿using ByCodersChallengeDotNet.Core.Entities;
+using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace ByCodersChallengeDotNet.Presentation.Controllers
         }
 
         [HttpGet("list")]
-        public IEnumerable<Operation> ListOperations()
+        public IEnumerable<OperationDTO> ListOperations()
         {
             return _operationService.ListOperations();
         }

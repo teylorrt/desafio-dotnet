@@ -2,6 +2,7 @@
 using ByCodersChallengeDotNet.Core.Entities;
 using ByCodersChallengeDotNet.Core.Enums;
 using ByCodersChallengeDotNet.Core.Exceptions;
+using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Repositories;
 using ByCodersChallengeDotNet.Core.Services;
 using System.Buffers;
@@ -73,7 +74,7 @@ namespace ByCodersChallengeDotNet.Application.Services
             return saved;
         }
 
-        public IEnumerable<Operation> ListOperations()
+        public IEnumerable<OperationDTO> ListOperations()
         {
             return _operationRepository.List();
         }
