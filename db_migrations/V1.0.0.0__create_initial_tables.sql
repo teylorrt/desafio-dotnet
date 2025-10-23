@@ -10,9 +10,6 @@ CREATE TABLE IF NOT EXISTS public.transaction_type
     CONSTRAINT CK_nature_sign CHECK ((nature = 'I' AND sign = '+') OR (nature = 'E' AND sign = '-'))
 );
 
-ALTER TABLE IF EXISTS public.transaction_type
-    OWNER to postgres;
-
 INSERT INTO public.transaction_type (id, description, nature, sign) VALUES 
   (1, 'Debit', 'I', '+'),
   (2, 'Boleto', 'E', '-'),
@@ -42,6 +39,3 @@ CREATE TABLE IF NOT EXISTS public.transaction
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-
-ALTER TABLE public.transaction
-    OWNER to postgres;
