@@ -11,7 +11,7 @@ namespace ByCodersChallengeDotNet.UnitTests.Entities.Operation
 
         public override string GetInvalidValue()
         {
-            return "";
+            return "              ";
         }
     }
 }

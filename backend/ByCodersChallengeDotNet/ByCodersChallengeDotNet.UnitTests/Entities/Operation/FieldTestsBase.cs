@@ -53,7 +53,7 @@ namespace ByCodersChallengeDotNet.UnitTests.Entities.Operation
         [Fact, Trait("Category", "Unit")]
         public void TestValidValue()
         {
-            var field = CreateField(LineTest.Replace(PlaceHolder, ValidValue));
+            var field = CreateField(Regex.Replace(LineBase, PlaceHolder, ValidValue));
 
             Assert.NotNull(field);
             Assert.Equal(ExpectedValidValue, field.Value);

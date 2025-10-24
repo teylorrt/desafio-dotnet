@@ -1,4 +1,5 @@
-﻿using ByCodersChallengeDotNet.Core.Enums;
+﻿using ByCodersChallengeDotNet.Core.Entities.Operation;
+using ByCodersChallengeDotNet.Core.Enums;
 
 namespace ByCodersChallengeDotNet.UnitTests.Entities.Operation
 {
