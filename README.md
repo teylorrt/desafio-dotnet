@@ -15,7 +15,7 @@
 - Docker
 
 ## How to Setup and Test
-#### All the following commands must be run in the project root folder
+#### IMPORTANT: All the following commands must be run in the project root folder
 
 ### Step 1: Install Docker
 ```bash
