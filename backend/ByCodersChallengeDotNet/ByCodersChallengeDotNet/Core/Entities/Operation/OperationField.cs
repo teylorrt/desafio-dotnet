@@ -6,6 +6,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
     public abstract class OperationField<T> : ValueObject<T, ReadOnlySpan<char>>
     {
         protected readonly Field Field;
+        private string _toString;
 
         public OperationField(Field field, ReadOnlySpan<char> value) : base(GetSlice(field, value))
         {
@@ -40,6 +41,7 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 
         protected override void SetValue(ReadOnlySpan<char> value)
         {
+            _toString = value.ToString();
             SetFieldValue(value);
         }
 
@@ -52,6 +54,11 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
                 throw new InvalidFieldException(type);
             }
             return true;
+        }
+
+        public override string ToString()
+        {
+            return _toString;
         }
 
         public abstract (bool, FieldType) ValidateField(ReadOnlySpan<char> value);
