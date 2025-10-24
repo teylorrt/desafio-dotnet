@@ -1,6 +1,9 @@
 ﻿using ByCodersChallengeDotNet.Application.Services;
-using ByCodersChallengeDotNet.Core.Services;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
+using ByCodersChallengeDotNet.Presentation.Controllers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,10 +16,10 @@ namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
         private const string PlaceHolderStore3 = "PLACE_HOLDER_STORE3";
         private const string PlaceHolderStore4 = "PLACE_HOLDER_STORE4";
 
-        private readonly IOperationService _operationService;
+        private readonly OperationController _operationController;
         public OperationTests()
         {
-            _operationService = new OperationService(new OperationRepository(DbContext));
+            _operationController = new OperationController(new OperationService(new OperationRepository(DbContext)));
         }
 
         public static string BuildRandomStoreName()
@@ -24,9 +27,9 @@ namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
             return BuildRandomStringWithNumbers(19);
         }
 
-        private static MemoryStream CreateStream(string placeHolder, string storeName)
+        private static IFormFile CreateStream(string placeHolder, string storeName)
         {
-            var text = System.IO.File.ReadAllText("CNAB.txt");
+            var text = File.ReadAllText("CNAB.txt");
 
             text = Regex.Replace(text, placeHolder, storeName);
 
@@ -37,29 +40,38 @@ namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
             ms.Write(bytes, 0, bytes.Length);
 
             ms.Position = 0;
-            return ms;
+
+            var fileMock = new Mock<IFormFile>();
+
+            fileMock.Setup(f => f.FileName).Returns("CNAB.txt");
+            fileMock.Setup(f => f.Length).Returns(ms.Length);
+            fileMock.Setup(f => f.OpenReadStream()).Returns(ms);
+            fileMock.Setup(f => f.ContentType).Returns("text/plain");
+
+            return fileMock.Object;
         }
 
-        private void ImportOperations(string placeHolder, string storeName)
+        private async Task ImportOperations(string placeHolder, string storeName)
         {
-            var stream = CreateStream(placeHolder, storeName);
-            
-            var imported = _operationService.ImportOperations(stream);
+            var formFile = CreateStream(placeHolder, storeName);
 
-            Assert.True(imported);
+            var result = (OkObjectResult) await _operationController.Import(formFile);
+
+            var expected = _operationController.Ok("SUCCESS");
+
+            Assert.Equal(expected.StatusCode, result.StatusCode);
+            Assert.Equal(expected.Value, result.Value);
         }
 
         [Fact, Trait("Category", "Integration")]
-        public void TestImportOperations()
+        public async Task TestImportOperations()
         {
             var storeName = BuildRandomStoreName();
 
             //replace all place holders
-            ImportOperations(@"PLACE_HOLDER_STORE\d", storeName);
+            await ImportOperations(@"PLACE_HOLDER_STORE\d", storeName);
 
-            var list = _operationService.ListOperationsGroupedByStore();
-
-            var operations = _operationService.ListByStoreName(storeName);
+            var operations = await _operationController.LisByStoreName(storeName);
 
             Assert.Equal(21, operations.Count());
 
@@ -70,14 +82,13 @@ namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
         }
 
         [Fact, Trait("Category", "Integration")]
-        public void TestListOperationsByStore()
+        public async Task TestListOperationsByStore()
         {
             var storeName = BuildRandomStoreName();
-            ImportOperations(PlaceHolderStore3, storeName);
 
-            var operationService = new OperationService(new OperationRepository(DbContext));
+            await ImportOperations(PlaceHolderStore3, storeName);
 
-            var list = operationService.ListByStoreName(storeName);
+            var list = await _operationController.LisByStoreName(storeName);
 
             Assert.Equal(4, list.Count());
         }
