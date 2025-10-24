@@ -17,12 +17,12 @@
 ## How to Setup and Test
 #### All the following commands must be run in the project root folder
 
-### Step 0: Install Docker
+### Step 1: Install Docker
 ```bash
 sudo sh get-docker.sh
 ```
 
-### Step 1: Start containers (docker compose)
+### Step 2: Start containers (docker compose)
 ```bash
 docker compose u -d
 ```
