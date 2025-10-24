@@ -1,17 +1,29 @@
 # ByCoders Programming Challenge
 
-This Challenge was implemented using the following technologies:
-1. .NET 9
-2. ASP.NET Core Web Razor Pages + Web API
-3. Dapper
-4. PostgreSQL
-5. Docker
-6. Powershell and Bash for scripts
+## This Challenge was implemented using the following technologies:
+- .NET 9
+- ASP.NET Core Web API
+- React TS + Vite
+- Dapper
+- PostgreSQL
+- Docker
+- Flyway for migrations
+- Shell script
 
-# Setup instructions for Ubuntu 24.04
+## Requirements
+- Ubuntu 24.04
+- Docker
 
-TODO
+## How to Setup and Test
+#### All the following commands must be run in the project root folder
 
-# Setup instructions for Windows
+### Step 0: Install Docker
+```bash
+sudo sh get-docker.sh
+```
 
-TODO
+### Step 1: Start containers (docker compose)
+```bash
+docker compose u -d
+```
+
