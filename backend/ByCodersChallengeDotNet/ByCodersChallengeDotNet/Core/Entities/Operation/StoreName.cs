@@ -2,7 +2,8 @@
 
 namespace ByCodersChallengeDotNet.Core.Entities.Operation
 {
-    public class StoreName(ReadOnlySpan<char> value) : OperationField<string>(Field, value, GetSlice)
+    //public class StoreName(ReadOnlySpan<char> value) : OperationField<string>(Field, value, GetSlice)
+    public class StoreName(ReadOnlySpan<char> value) : OperationField<string>(Field, value)
     {
         private static new readonly Field Field = new(FieldType.StoreName, 62, 80, 19);
 

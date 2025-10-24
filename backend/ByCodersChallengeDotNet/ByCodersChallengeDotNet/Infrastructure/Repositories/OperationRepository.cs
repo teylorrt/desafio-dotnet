@@ -3,6 +3,7 @@ using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Repositories;
 using ByCodersChallengeDotNet.Infrastructure.DbContext;
 using Dapper;
+using System.Data;
 
 namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 {
@@ -43,9 +44,9 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
         public IEnumerable<OperationModel> List(string name)
         {
             var query = QueryBase +
-                @" WHERE t.store_name = '@name'";
+                @$" WHERE t.store_name = @Name";
 
-            return _dbContext.Connection.Query<OperationModel>(sql: query, param: new { name }, transaction: _dbContext.Transaction);
+            return _dbContext.Connection.Query<OperationModel>(sql: query, param: new { Name = name }, transaction: _dbContext.Transaction);
         }
 
         public bool Save(IEnumerable<Operation> operations)

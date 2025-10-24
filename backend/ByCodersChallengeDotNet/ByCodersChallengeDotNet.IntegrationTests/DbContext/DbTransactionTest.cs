@@ -28,7 +28,7 @@ namespace ByCodersChallengeDotNet.IntegrationTests.DbContext
             // do nothing
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             // do nothing
         }

@@ -1,8 +1,6 @@
 ﻿using ByCodersChallengeDotNet.Application.Services;
-using ByCodersChallengeDotNet.Core.Models;
 using ByCodersChallengeDotNet.Core.Services;
 using ByCodersChallengeDotNet.Infrastructure.Repositories;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -58,6 +56,8 @@ namespace ByCodersChallengeDotNet.IntegrationTests.OperationTests
 
             //replace all place holders
             ImportOperations(@"PLACE_HOLDER_STORE\d", storeName);
+
+            var list = _operationService.ListOperationsGroupedByStore();
 
             var operations = _operationService.ListByStoreName(storeName);
 
