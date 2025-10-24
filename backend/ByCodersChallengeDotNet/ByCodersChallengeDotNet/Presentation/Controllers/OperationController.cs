@@ -28,7 +28,7 @@ namespace ByCodersChallengeDotNet.Presentation.Controllers
         [HttpGet("list-by-store")]
         public IEnumerable<OperationGroupModel> ListOperationsByStore()
         {
-            return _operationService.ListOperationsByStore();
+            return _operationService.ListOperationsGroupedByStore();
         }
     }
 }

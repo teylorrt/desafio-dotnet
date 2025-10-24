@@ -56,7 +56,7 @@ namespace ByCodersChallengeDotNet.Application.Services
             return saved;
         }
 
-        public IEnumerable<OperationGroupModel> ListOperationsByStore()
+        public IEnumerable<OperationGroupModel> ListOperationsGroupedByStore()
         {
             var operations = _operationRepository.List();
 
@@ -100,6 +100,11 @@ namespace ByCodersChallengeDotNet.Application.Services
 
             // Return a ReadOnlySpan<char> from the populated portion of the buffer
             return new ReadOnlySpan<char>(charBuffer, 0, charsWritten);
+        }
+
+        public IEnumerable<OperationModel> ListByStoreName(string name)
+        {
+            return _operationRepository.List(name);
         }
     }
 }

@@ -7,5 +7,6 @@ namespace ByCodersChallengeDotNet.Core.Repositories
     {
         bool Save(IEnumerable<Operation> operations);
         IEnumerable<OperationModel> List();
+        IEnumerable<OperationModel> List(string name);
     }
 }

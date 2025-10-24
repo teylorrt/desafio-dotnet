@@ -1,6 +1,7 @@
 ﻿using ByCodersChallengeDotNet.Infrastructure.DbContext;
 using ByCodersChallengeDotNet.IntegrationTests.DbContext;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace ByCodersChallengeDotNet.IntegrationTests
 {
@@ -25,6 +26,29 @@ namespace ByCodersChallengeDotNet.IntegrationTests
         {
             DbContext.RollbackTransaction();
             DbContext.Connection.Close();
+        }
+
+        public static string BuildRandomString(string saltCharacters, int length = 10)
+        {
+            var salt = new StringBuilder();
+            for (var i = 1; i <= length; i++)
+            {
+                var index = BuildRandomNumber(0, saltCharacters.Length - 1);
+                salt.Append(saltCharacters.Substring(index, 1));
+            }
+            return salt.ToString();
+        }
+
+        public static int BuildRandomNumber(int min = 1, int max = 100)
+        {
+            var random = new Random();
+            return random.Next(min, max);
+        }
+
+        public static string BuildRandomStringWithNumbers(int length = 10)
+        {
+            // ReSharper disable once StringLiteralTypo
+            return BuildRandomString("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length);
         }
     }
 }

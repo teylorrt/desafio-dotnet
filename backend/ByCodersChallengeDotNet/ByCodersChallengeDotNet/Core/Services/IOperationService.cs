@@ -1,11 +1,11 @@
-﻿using ByCodersChallengeDotNet.Core.Entities;
-using ByCodersChallengeDotNet.Core.Models;
+﻿using ByCodersChallengeDotNet.Core.Models;
 
 namespace ByCodersChallengeDotNet.Core.Services
 {
     public interface IOperationService
     {
         bool ImportOperations(Stream fileStream);
-        IEnumerable<OperationGroupModel> ListOperationsByStore();
+        IEnumerable<OperationGroupModel> ListOperationsGroupedByStore();
+        IEnumerable<OperationModel> ListByStoreName(string name);
     }
 }

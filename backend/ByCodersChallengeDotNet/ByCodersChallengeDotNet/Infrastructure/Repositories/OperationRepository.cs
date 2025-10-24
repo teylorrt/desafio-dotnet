@@ -8,16 +8,7 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 {
     public class OperationRepository : IOperationRepository
     {
-        private readonly IDbContext _dbContext;
-
-        public OperationRepository(IDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public IEnumerable<OperationModel> List()
-        {
-            string query = @"select 
+        private const string QueryBase = @"select 
 	                t.id,
 	                t.type,
 	                tt.description,
@@ -31,7 +22,30 @@ namespace ByCodersChallengeDotNet.Infrastructure.Repositories
 	                t.store_name as storeName
                 from public.""operation"" t
                 inner join transaction_type tt on tt.id = t.type";
-            return _dbContext.Connection.Query<OperationModel>(sql: query, transaction: _dbContext.Transaction);
+
+        private readonly IDbContext _dbContext;
+
+        public OperationRepository(IDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public OperationModel Get(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<OperationModel> List()
+        {
+            return _dbContext.Connection.Query<OperationModel>(sql: QueryBase, transaction: _dbContext.Transaction);
+        }
+
+        public IEnumerable<OperationModel> List(string name)
+        {
+            var query = QueryBase +
+                @" WHERE t.store_name = '@name'";
+
+            return _dbContext.Connection.Query<OperationModel>(sql: query, param: new { name }, transaction: _dbContext.Transaction);
         }
 
         public bool Save(IEnumerable<Operation> operations)
