@@ -17,13 +17,18 @@
 ## How to Setup and Test
 #### All the following commands must be run in the project root folder
 
-### Step 0: Install Docker
+### Step 1: Install Docker
 ```bash
 sudo sh get-docker.sh
 ```
 
-### Step 1: Start containers (docker compose)
+### Step 2: Start containers (docker compose)
 ```bash
 docker compose u -d
 ```
+- If everything goes well the result should be like this
+<img width="1167" height="180" alt="image" src="https://github.com/user-attachments/assets/b20c6772-f34a-4c1e-b046-ee46c6ea0dc0" />
+
+### Step 3: Access import/list page
+Access url http://localhost:5173/
 
