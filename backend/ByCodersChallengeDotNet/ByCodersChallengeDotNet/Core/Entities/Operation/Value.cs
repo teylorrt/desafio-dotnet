@@ -11,9 +11,9 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = _value / 100.00m;
         }
 
-        public override bool ValidateField(ReadOnlySpan<char> value)
+        public override (bool, FieldType) ValidateField(ReadOnlySpan<char> value)
         {
-            return decimal.TryParse(value, out _);
+            return (decimal.TryParse(value, out _), FieldType.Value);
         }
     }
 }

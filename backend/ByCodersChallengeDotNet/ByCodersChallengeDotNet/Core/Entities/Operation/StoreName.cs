@@ -18,9 +18,9 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = value.Trim().ToString();
         }
 
-        public override bool ValidateField(ReadOnlySpan<char> value)
+        public override (bool, FieldType) ValidateField(ReadOnlySpan<char> value)
         {
-            return !string.IsNullOrWhiteSpace(value.Trim().ToString());
+            return (!string.IsNullOrWhiteSpace(value.Trim().ToString()), FieldType.StoreName);
         }
     }
 }

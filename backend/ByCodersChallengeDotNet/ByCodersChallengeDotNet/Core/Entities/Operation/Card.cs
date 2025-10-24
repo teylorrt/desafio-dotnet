@@ -10,9 +10,9 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = value.ToString();
         }
 
-        public override bool ValidateField(ReadOnlySpan<char> value)
+        public override (bool, FieldType) ValidateField(ReadOnlySpan<char> value)
         {
-            return CardRegex().IsMatch(value);
+            return (CardRegex().IsMatch(value), FieldType.Card);
         }
 
         [GeneratedRegex(@"^\d{4}\*{4}\d{4}$")]

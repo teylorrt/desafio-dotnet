@@ -34,9 +34,9 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
             Value = new DateTime(year, month, day, hour, minute, second);
         }
 
-        public override bool ValidateField(ReadOnlySpan<char> value)
+        public override (bool, FieldType) ValidateField(ReadOnlySpan<char> value)
         {
-            return TimeRegex().IsMatch(value);
+            return (TimeRegex().IsMatch(value), FieldType.Time);
         }
 
         [GeneratedRegex(@"^\d{14}$")]

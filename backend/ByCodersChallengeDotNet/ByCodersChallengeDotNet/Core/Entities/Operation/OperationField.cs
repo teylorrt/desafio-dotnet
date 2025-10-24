@@ -45,14 +45,16 @@ namespace ByCodersChallengeDotNet.Core.Entities.Operation
 
         public override bool Validate(ReadOnlySpan<char> value)
         {
-            if(!ValidateField(value))
+            var (isValid, type) = ValidateField(value);
+
+            if (!isValid)
             {
-                throw new InvalidFieldException(Field.Type);
+                throw new InvalidFieldException(type);
             }
             return true;
         }
 
-        public abstract bool ValidateField(ReadOnlySpan<char> value);
+        public abstract (bool, FieldType) ValidateField(ReadOnlySpan<char> value);
         protected abstract void SetFieldValue(ReadOnlySpan<char> value);
     }
 }
