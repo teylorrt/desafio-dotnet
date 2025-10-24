@@ -38,3 +38,17 @@ Access url http://localhost:5173/
 docker stop $(docker ps -a -q)
 ```
 
+## How to run tests
+#### IMPORTANT: All the following commands must be run in the project root folder
+
+### Integration Tests
+- db container needs to be running
+```bash
+dotnet test backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet.IntegrationTests/ByCodersChallengeDotNet.IntegrationTests.csproj --property:WarningLevel=0 -t
+```
+
+### Unit Tests
+```bash
+dotnet test backend/ByCodersChallengeDotNet/ByCodersChallengeDotNet.UnitTests/ByCodersChallengeDotNet.UnitTests.csproj --property:WarningLevel=0 -t
+```
+
